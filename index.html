@@ -1,0 +1,80 @@
+<!DOCTYPE​ html>
+<html>
+<head>
+    <title>Antipode Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-5045993662314109",
+            enable_page_level_ads: true
+        });
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #3c2f2f;
+            color: #e5d8b0;
+            font-family: sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            font-size: 24px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button onclick="calculateAntipode()">🪦</button>
+    </div>
+    <script>
+        function calculateAntipode() {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                var antipodeLatitude = -latitude;
+                var antipodeLongitude = (longitude + 180) % 360 - 180;
+                var url = "https://www.google.com/maps/search/?api=1&query=" + antipodeLatitude + "," + antipodeLongitude;
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        var parser = new DOMParser();
+                        var doc = parser.parseFromString(data, "text/html");
+                        var townName = doc.querySelector(".section-hero-header-title-description h1").textContent;
+                        var direction = doc.querySelector(".widget-pane-link").textContent;
+                        var degree = direction.match(/\d+/)[0];
+                        var walkOrSwim = direction.includes("swim") ? "swim" : "walk";
+                        var message = "Turn " + degree + "° and " + walkOrSwim + " to get to " + townName + ".";
+                        alert("🪦 " + message);
+                    });
+            });
+        }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-5045993662314109"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
